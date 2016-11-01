@@ -6,7 +6,13 @@ var users = []
 var userCount = 0
 
 function User(socket) {
+  var self = this
+  this.socket = socket
 
+  this.socket.on('touchesBegan', function(data) {
+    console.log(data)
+    self.socket.emit('touchesBegan', data)
+  })
 }
 
 function Chat() {

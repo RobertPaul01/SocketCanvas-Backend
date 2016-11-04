@@ -16,19 +16,24 @@ Chat.prototype.addHandlers = function() {
   this.io.sockets.on('connection', function(socket) {
     console.log('a user connected')
     
-    socket.on('touchesBegan', function(data) {
-      console.log('touchesBegan:', data)
-        chat.io.sockets.emit('touchesBegan', data)
-    })
+    // socket.on('touchesBegan', function(data) {
+    //   console.log('touchesBegan:', data)
+    //     chat.io.sockets.emit('touchesBegan', data)
+    // })
 
-    socket.on('touchesMoved', function(data) {
-      console.log('touchesMoved:', data)
-      chat.io.sockets.emit('touchesMoved', data)
-    })
+    // socket.on('touchesMoved', function(data) {
+    //   console.log('touchesMoved:', data)
+    //   chat.io.sockets.emit('touchesMoved', data)
+    // })
 
-    socket.on('touchesEnded', function(data) {
+    // socket.on('touchesEnded', function(data) {
+    //   console.log(data)
+    //   chat.io.sockets.emit('touchesEnded', data)
+    // })
+
+    socket.on('drawLineFrom', function(data) {
       console.log(data)
-      chat.io.sockets.emit('touchesEnded', data)
+      chat.io.sockets.emit('drawLineFrom', data)
     })
 
     socket.on('disconnect', function(socket) {

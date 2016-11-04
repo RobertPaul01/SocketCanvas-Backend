@@ -2,18 +2,7 @@ var app = require('http').createServer()
 app.listen(3000)
 
 var users = []
-
 var userCount = 0
-
-function User(socket) {
-  var self = this
-  this.socket = socket
-
-  this.socket.on('touchesBegan', function(data) {
-    console.log(data)
-    self.socket.emit('touchesBegan', data)
-  })
-}
 
 function Chat() {
   this.io = require('socket.io')(app)
@@ -26,7 +15,22 @@ Chat.prototype.addHandlers = function() {
 
   this.io.sockets.on('connection', function(socket) {
     console.log('a user connected')
-    new User(socket)
+    
+    socket.on('touchesBegan', function(data) {
+      console.log('touchesBegan:', data)
+        chat.io.sockets.emit('touchesBegan', data)
+    })
+
+    socket.on('touchesMoved', function(data) {
+      console.log('touchesMoved:', data)
+      chat.io.sockets.emit('touchesMoved', data)
+    })
+
+    socket.on('touchesEnded', function(data) {
+      console.log(data)
+      chat.io.sockets.emit('touchesEnded', data)
+    })
+
     socket.on('disconnect', function(socket) {
       console.log('a user disconnected')
     })

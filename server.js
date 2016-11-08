@@ -19,7 +19,7 @@ Chat.prototype.addHandlers = function() {
     socket.on('drawLineFrom', function(data) {
       console.log(data)
       fs.appendFile('log.txt', function(err){
-		if(err) return console.log(err);
+	    if(err) return console.log(err);
 	  });
       chat.io.sockets.emit('drawLineFrom', data)
     })

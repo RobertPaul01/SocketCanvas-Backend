@@ -3,7 +3,7 @@ app.listen(3000)
 
 var users = []
 var userCount = 0
-
+var fs=require('fs');
 function Chat() {
   this.io = require('socket.io')(app)
   console.log('Running on port 3000')
@@ -18,6 +18,9 @@ Chat.prototype.addHandlers = function() {
 
     socket.on('drawLineFrom', function(data) {
       console.log(data)
+      fs.appendFile('log.txt', function(err){
+		if(err) return console.log(err);
+	  });
       chat.io.sockets.emit('drawLineFrom', data)
     })
 

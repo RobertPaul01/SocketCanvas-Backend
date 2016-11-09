@@ -29,7 +29,7 @@ Chat.prototype.addHandlers = function() {
     })
     //send log contents to the user
     var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt');
-    lr.on('error'), function(err){
+    lr.on('error', function(err){
       console.log(err)
     });
     lr.on('line',fuction(line){

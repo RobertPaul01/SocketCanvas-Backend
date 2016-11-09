@@ -28,6 +28,20 @@ Chat.prototype.addHandlers = function() {
       console.log('a user disconnected')
     })
   })
+  
+  //send log contents to the user
+  var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt');
+  lr.on('error'), function(err){
+    console.log(err)
+  });
+  lr.on('line',fuction(line){
+    //need to finish this
+    chat.io.socket.emit('drawLineFrom', JSON.parse(line))
+  });
+
+  lr.on('end', function(){
+    //do something
+  });
 }
 
 var chat = new Chat()

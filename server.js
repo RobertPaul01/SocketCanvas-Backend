@@ -34,7 +34,7 @@ Chat.prototype.addHandlers = function() {
     });
     lr.on('line',function(line){
       //need to finish this
-    chat.io.socket.emit('drawLineFrom', JSON.parse(line))
+      socket.emit('drawLineFrom', JSON.parse(line))
     });
 
     lr.on('end', function(){

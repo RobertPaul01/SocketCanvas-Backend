@@ -4,6 +4,8 @@ app.listen(3000)
 var users = []
 var userCount = 0
 var fs=require('fs');
+var clearRequests=0;
+
 function Chat() {
   this.io = require('socket.io')(app)
   console.log('Running on port 3000')
@@ -15,7 +17,19 @@ Chat.prototype.addHandlers = function() {
   
   this.io.sockets.on('connection', function(socket) {
     console.log('a user connected')
-
+	userCount++;
+	socket.on('clearReady', function(){
+	  clearRequesets++;
+	  if(clearRequests>(userCount/2){
+	  	//TODO make a new log
+	  }
+	})
+	
+	socket.on('clearUnready', function(){
+	  clearRequests--;
+	})
+	
+	socket.on
     socket.on('drawLineFrom', function(data) {
       console.log(data)
       fs.appendFile('log.txt',JSON.stringify(data)+"\n", function(err){

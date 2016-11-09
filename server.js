@@ -12,7 +12,8 @@ function Chat() {
 
 Chat.prototype.addHandlers = function() {
   var chat = this
-
+  var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt');
+  
   this.io.sockets.on('connection', function(socket) {
     console.log('a user connected')
 
@@ -28,11 +29,10 @@ Chat.prototype.addHandlers = function() {
       console.log('a user disconnected')
     })
     //send log contents to the user
-    var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt');
     lr.on('error', function(err){
       console.log(err)
     });
-    lr.on('line',fuction(line){
+    lr.on('line',function(line){
       //need to finish this
     chat.io.socket.emit('drawLineFrom', JSON.parse(line))
     });

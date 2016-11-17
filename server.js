@@ -3,8 +3,8 @@ app.listen(3000)
 
 var users = []
 var userCount = 0
-var fs=require('fs');
-var clearRequests=0;
+var fs=require('fs')
+var clearRequests=0
 
 var count = 0
 
@@ -21,14 +21,14 @@ Chat.prototype.addHandlers = function() {
     console.log('a user connected')
   	userCount++
   	socket.on('clearReady', function(){
-  	  clearRequesets++;
+  	  clearRequesets++
   	  if (clearRequests>(userCount/2)) {
   	  	//TODO make a new log
   	  }
   	})
   	
   	socket.on('clearUnready', function(){
-  	  clearRequests--;
+  	  clearRequests--
   	})
   	
     socket.on('drawLineFrom', function(data) {
@@ -47,21 +47,22 @@ Chat.prototype.addHandlers = function() {
     })
 
     //send log contents to the user
-    var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt');
-    lr.start = (count < 1000) ? 0 : count - 1000 
+    var LineByLineReader = require('line-by-line')
+    lr = new LineByLineReader('log.txt')
+    lr.start = 1000
 
     lr.on('error', function(err){
       console.log(err)
-    });
+    })
 
     lr.on('line',function(line){
       //need to finish this
       socket.emit('drawLineFrom', JSON.parse(line))
-    });
+    })
 
     lr.on('end', function(){
       //do something
-    });
+    })
   })
 }
 

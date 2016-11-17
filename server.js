@@ -6,6 +6,8 @@ var userCount = 0
 var fs=require('fs');
 var clearRequests=0;
 
+var count = 0
+
 function Chat() {
   this.io = require('socket.io')(app)
   console.log('Running on port 3000')
@@ -20,7 +22,7 @@ Chat.prototype.addHandlers = function() {
 	userCount++;
 	socket.on('clearReady', function(){
 	  clearRequesets++;
-	  if(clearRequests>(userCount/2){
+	  if (clearRequests>(userCount/2)) {
 	  	//TODO make a new log
 	  }
 	})
@@ -32,6 +34,7 @@ Chat.prototype.addHandlers = function() {
 	socket.on
     socket.on('drawLineFrom', function(data) {
       console.log(data)
+      count++
       fs.appendFile('log.txt',JSON.stringify(data)+"\n", function(err){
 	    if(err) return console.log(err);
 	  });
@@ -42,7 +45,11 @@ Chat.prototype.addHandlers = function() {
       console.log('a user disconnected')
     })
     //send log contents to the user
-    var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt');
+    var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt', 
+      {
+        start: (count < 1000) ? 0 : count - 1000 
+      }
+    );
     lr.on('error', function(err){
       console.log(err)
     });

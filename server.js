@@ -19,40 +19,44 @@ Chat.prototype.addHandlers = function() {
   
   this.io.sockets.on('connection', function(socket) {
     console.log('a user connected')
-	userCount++;
-	socket.on('clearReady', function(){
-	  clearRequesets++;
-	  if (clearRequests>(userCount/2)) {
-	  	//TODO make a new log
-	  }
-	})
-	
-	socket.on('clearUnready', function(){
-	  clearRequests--;
-	})
-	
-	socket.on
+  	userCount++
+  	socket.on('clearReady', function(){
+  	  clearRequesets++;
+  	  if (clearRequests>(userCount/2)) {
+  	  	//TODO make a new log
+  	  }
+  	})
+  	
+  	socket.on('clearUnready', function(){
+  	  clearRequests--;
+  	})
+  	
     socket.on('drawLineFrom', function(data) {
       console.log(data)
       count++
-      fs.appendFile('log.txt',JSON.stringify(data)+"\n", function(err){
-	    if(err) return console.log(err);
-	  });
+
+      fs.appendFile('log.txt',JSON.stringify(data)+"\n", function(err) {
+        if(err) return console.log(err);
+      });
+
       chat.io.sockets.emit('drawLineFrom', data)
     })
 
     socket.on('disconnect', function(socket) {
       console.log('a user disconnected')
     })
+
     //send log contents to the user
     var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt', 
       {
         start: (count < 1000) ? 0 : count - 1000 
       }
     );
+
     lr.on('error', function(err){
       console.log(err)
     });
+
     lr.on('line',function(line){
       //need to finish this
       socket.emit('drawLineFrom', JSON.parse(line))

@@ -47,11 +47,8 @@ Chat.prototype.addHandlers = function() {
     })
 
     //send log contents to the user
-    var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt', 
-      {
-        start: (count < 1000) ? 0 : count - 1000 
-      }
-    );
+    var LineByLineReader=require('line-by-line'),lr=new LineByLineReader('log.txt');
+    lr.start = (count < 1000) ? 0 : count - 1000 
 
     lr.on('error', function(err){
       console.log(err)

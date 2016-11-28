@@ -25,6 +25,7 @@ Chat.prototype.addHandlers = function() {
   	  if(clearRequests>(userCount/2)) {
   	  	chat.io.sockets.emit('clear', '')
         fs.truncate('log.txt', 0, function(){console.log('Cleared the log file')})
+        lineCount = 0
   	  }
   	})
   	
